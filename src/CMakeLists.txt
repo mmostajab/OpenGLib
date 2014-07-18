@@ -6,7 +6,7 @@ set(CMAKE_DEBUG_DIR "../bin/debug")
 # find openCV
 set(CMAKE_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/lib/cmake/ )
 find_package(OpenGL REQUIRED)
-find_package(SDL REQUIRED)
+find_package(GLFW3 REQUIRED)
 
 include_directories(${EIGEN3_INCLUDE_DIR} ${GLFW_INCLUDE_DIRS})
 add_executable (OpenGLib
