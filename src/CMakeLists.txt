@@ -14,6 +14,7 @@ add_executable (OpenGLib
   main.cpp
   GLApp.cpp
   SimpleGLApp.cpp
+  VertexArray.cpp
   )
 
 target_link_libraries (OpenGLib ${OPENGL_LIBRARY} ${GLFW_LIBRARIES} ${ANT_TWEAK_BAR_LIBRARY})
