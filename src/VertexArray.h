@@ -6,6 +6,10 @@
 
 #include <vector>
 
+/**
+ * Renders an array of vertices on the System Memory on the screen.
+ * * Initialization and Deinitialization is NOT required.
+ */
 class glcVertexArray
 {
 public:
