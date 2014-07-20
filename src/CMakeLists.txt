@@ -8,6 +8,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/lib/cmake/ )
 find_package(OpenGL REQUIRED)
 find_package(GLFW3 REQUIRED)
 find_package(AntTweakBar REQUIRED)
+find_package(GLEW REQUIRED)
 
 include_directories(${GLFW_INCLUDE_DIRS})
 add_executable (OpenGLib
@@ -19,7 +20,7 @@ add_executable (OpenGLib
   ErrorFinder.cpp
   )
 
-target_link_libraries (OpenGLib ${OPENGL_LIBRARY} ${GLFW_LIBRARIES} ${ANT_TWEAK_BAR_LIBRARY})
+target_link_libraries (OpenGLib ${OPENGL_LIBRARY} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES} ${ANT_TWEAK_BAR_LIBRARY})
 
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
 	set_target_properties(OpenGLib PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_DEBUG_DIR})

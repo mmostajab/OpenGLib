@@ -1,9 +1,9 @@
 #include <iostream>
 
-#define GLFW_INCLUDE_GLU
-#include <GLFW/glfw3.h>
+//#define GLFW_INCLUDE_GLU
 
 #include "SimpleGLApp.h"
+#include <GLFW/glfw3.h>
 
 char g_WndTitle[] = "Main Window - SimpleOpenGL App";
 int g_WndWidth  = 640;
@@ -31,13 +31,6 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
-	MyGlApp.init();
-	if(!MyGlApp.isInitialized())
-	{
-		std::cout << "ERROR: Cannot initialize OpenGL\n";
-		return -1;
-	}
-
 	// create the window
 	mainWindow = glfwCreateWindow(g_WndWidth, g_WndHeight, g_WndTitle, NULL, NULL);
 	if(!mainWindow)
@@ -52,6 +45,13 @@ int main(int argc, char* argv[])
 	resizeWindow(mainWindow, g_WndWidth, g_WndHeight);
 	glfwSwapInterval(1);
 	glfwSetWindowPos(mainWindow, 100, 100);
+
+	MyGlApp.init();
+	if(!MyGlApp.isInitialized())
+	{
+		std::cout << "ERROR: Cannot initialize OpenGL\n";
+		return -1;
+	}
 
 	double prevt = glfwGetTime();
 

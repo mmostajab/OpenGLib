@@ -6,6 +6,12 @@ GLApp::GLApp(const int& _pWidth, const int& _pHeight): b_Initialized(false), m_W
 
 void GLApp::init()
 {
+	GLenum err = glewInit();
+	if(err != GLEW_OK)
+	{
+		return;
+	}
+
 	glEnable(GL_DEPTH_TEST);
 
 	// set the Class as initialized

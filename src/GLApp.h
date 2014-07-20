@@ -1,8 +1,7 @@
 #ifndef __GL_APP__
 #define __GL_APP__
 
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include <GL/glew.h>
 
 class GLApp
 {
