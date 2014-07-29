@@ -45,8 +45,12 @@ void glcVertexBuffer::renderColoredIndexed(const std::vector<int>& _pIndexVec)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);	// bind the buffer to the pipeline (only one can be bound to the pipeline)
-	glVertexPointer(3, GL_FLOAT, 0, BUFFER_OFFSET(0));
-	glColorPointer(3, GL_FLOAT, 0, BUFFER_OFFSET(15 * sizeof(float)));
+
+	// stride is the size of one element of the vertex data information.
+	size_t stride = 6 * sizeof(float);
+	glVertexPointer(3, GL_FLOAT, stride, BUFFER_OFFSET(0));
+	glColorPointer(3, GL_FLOAT, stride, BUFFER_OFFSET(3 * sizeof(float)));
+
 	glDrawElements(GL_TRIANGLES, _pIndexVec.size(), GL_UNSIGNED_INT, &_pIndexVec[0]);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);			// unbind any currently bound buffer	
 	glDisableClientState(GL_COLOR_ARRAY);
