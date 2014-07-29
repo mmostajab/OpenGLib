@@ -21,14 +21,17 @@ class glcVertexBuffer
 private:
 	GLuint m_BufferID;
 	int m_nVertices;
-
+ 
 public:
 	glcVertexBuffer();
 
 	void init();
 
 	void fill(const std::vector<float>& _pDataVec, GLenum _pUsage = GL_STATIC_DRAW);
+	
 	void render();
+	void renderIndexed(const std::vector<int>& _pIndexVec);
+	void renderColoredIndexed(const std::vector<int>& _pIndexVec);
 
 	void deinit();
 
