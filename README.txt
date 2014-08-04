@@ -7,3 +7,10 @@ Build Project:
 1. mkdir build
 2. cd build
 3. cmake .. or ccmake ..
+
+Supported features:
+
+* Immediate Mode Rendering
+* Vertex Arrays
+* Vertex Buffers
+* Shader Programming
