@@ -32,6 +32,9 @@ public:
 	void render();
 	void renderIndexed(const std::vector<int>& _pIndexVec);
 	void renderColoredIndexed(const std::vector<int>& _pIndexVec);
+	void renderShaderedColoredIndexed(const std::vector<int>& _pIndexVec);
+	void renderShaderedTexturedIndexed(const std::vector<int>& _pIndexVec);
+
 
 	void deinit();
 

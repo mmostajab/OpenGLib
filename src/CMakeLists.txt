@@ -19,6 +19,8 @@ add_executable (OpenGLib
   VertexBuffer.cpp
   ErrorFinder.cpp
   ShaderProgram.cpp
+  Texture2D.cpp
+  targa.cpp
   )
 
 target_link_libraries (OpenGLib ${OPENGL_LIBRARY} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES} ${ANT_TWEAK_BAR_LIBRARY})

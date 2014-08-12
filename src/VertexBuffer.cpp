@@ -43,27 +43,61 @@ void glcVertexBuffer::renderIndexed(const std::vector<int>& _pIndexVec)
 
 void glcVertexBuffer::renderColoredIndexed(const std::vector<int>& _pIndexVec)
 {
-	//glEnableClientState(GL_VERTEX_ARRAY);
-	//glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);	// bind the buffer to the pipeline (only one can be bound to the pipeline)
 
 	// stride is the size of one element of the vertex data information.
 	size_t stride = 6 * sizeof(float);
-	//glVertexPointer(3, GL_FLOAT, stride, BUFFER_OFFSET(0));
-	//glColorPointer(3, GL_FLOAT, stride, BUFFER_OFFSET(3 * sizeof(float)));
+	glVertexPointer(3, GL_FLOAT, stride, BUFFER_OFFSET(0));
+	glColorPointer(3, GL_FLOAT, stride, BUFFER_OFFSET(3 * sizeof(float)));
+
+	glDrawElements(GL_TRIANGLES, _pIndexVec.size(), GL_UNSIGNED_INT, &_pIndexVec[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);			// unbind any currently bound buffer	
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);	
+}
+
+void glcVertexBuffer::renderShaderedColoredIndexed(const std::vector<int>& _pIndexVec)
+{
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);	// bind the buffer to the pipeline (only one can be bound to the pipeline)
+
+	// stride is the size of one element of the vertex data information.
+	size_t stride = 8 * sizeof(float);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, BUFFER_OFFSET(0));
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, BUFFER_OFFSET(3 * sizeof(float)));
-	// glVertexAttribPointer((GLint)1, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(BLUE_OFFSET));
 
 	glDrawElements(GL_TRIANGLES, _pIndexVec.size(), GL_UNSIGNED_INT, &_pIndexVec[0]);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);			// unbind any currently bound buffer	
-	//glDisableClientState(GL_COLOR_ARRAY);
-	//glDisableClientState(GL_VERTEX_ARRAY);	
 
 	//glDisableVertexAttribArray(1);
 	//glDisableVertexAttribArray(0);
+}
+
+void glcVertexBuffer::renderShaderedTexturedIndexed(const std::vector<int>& _pIndexVec)
+{
+	glEnableVertexAttribArray(2);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);	// bind the buffer to the pipeline (only one can be bound to the pipeline)
+
+	// stride is the size of one element of the vertex data information.
+	size_t stride = 8 * sizeof(float);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, BUFFER_OFFSET(0));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, BUFFER_OFFSET(3 * sizeof(float)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, BUFFER_OFFSET(6 * sizeof(float)));
+
+	glDrawElements(GL_TRIANGLES, _pIndexVec.size(), GL_UNSIGNED_INT, &_pIndexVec[0]);
+
+	//glDisableVertexAttribArray(0);
+	//glDisableVertexAttribArray(1);
+	//glDisableVertexAttribArray(2);
 }
 
 void glcVertexBuffer::deinit()

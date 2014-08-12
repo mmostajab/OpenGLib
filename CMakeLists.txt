@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(ARPuppet)
+project(OpenGLib)
 
 # set compiler for using of default gcc via macport (gcc 4.8)
 # set(CMAKE_CXX_COMPILER "clang++")
