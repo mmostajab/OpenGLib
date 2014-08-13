@@ -13,4 +13,5 @@ Supported features:
 * Immediate Mode Rendering
 * Vertex Arrays
 * Vertex Buffers
+* Textures
 * Shader Programming

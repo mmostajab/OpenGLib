@@ -8,10 +8,15 @@ class glcTexture2D
 private:
 	GLuint m_ID;
 
+	bool b_Initialized;
+
 public:
 	glcTexture2D();
 
-	void init();
+
+	void init(const char* _pImgFilename);
+
+	void use();
 
 	void deinit();
 
