@@ -14,4 +14,5 @@ Supported features:
 * Vertex Arrays
 * Vertex Buffers
 * Textures
+   > Supports TGA file loading
 * Shader Programming
