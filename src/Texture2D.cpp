@@ -23,6 +23,8 @@ void glcTexture2D::init(const char* _pImgFilename)
 	glBindTexture(GL_TEXTURE_2D, m_ID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, textureImg.getWidth(), 
 		textureImg.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, textureImg.getImageData());
 }
@@ -40,5 +42,4 @@ void glcTexture2D::deinit()
 
 glcTexture2D::~glcTexture2D()
 {
-
 }

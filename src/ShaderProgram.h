@@ -34,6 +34,7 @@ public:
 	GLuint getUniformLocation(const std::string& _pUniformName);
 	GLuint getAttributeLocation(const std::string& _pAttributeName);
 
+	void sendUniform(const std::string& _pUniformName, const int& _pId);
 	void sendUniformMatrix4fv(const std::string& _pUniformName, const float* _pMatrixPtr, bool _pTranspose = false);
 	void bindAttribute(const unsigned int& _pIndex, const std::string& _pAttributeName);
 

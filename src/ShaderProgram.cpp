@@ -125,6 +125,12 @@ bool glcShaderProgram::compileShader(const glcShaderInfo& _pShaderInfo)
     return true;
 }
 
+void glcShaderProgram::sendUniform(const std::string& _pUniformName, const int& _pId)
+{
+    GLuint location = getUniformLocation(_pUniformName);
+    glUniform1i(location, _pId);
+}
+
 void glcShaderProgram::sendUniformMatrix4fv(const std::string& _pUniformName, const float* _pMatrixPtr, bool _pTranspose)
 {
 	GLuint location = getUniformLocation(_pUniformName);
