@@ -28,6 +28,8 @@ public:
 	glcShaderProgram(const char* _pVSFileName, const char* _pFSFileName);
 
 	void init();
+	void init(const std::string& _pShaderHeader);
+
 	void link();
 	void use();
 

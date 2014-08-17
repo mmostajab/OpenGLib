@@ -39,6 +39,38 @@ void glcShaderProgram::init()
 	b_Initialized = true;
 }
 
+void glcShaderProgram::init(const std::string& _pShaderHeader)
+{
+    m_VS.id = glCreateShader(GL_VERTEX_SHADER);
+    m_FS.id = glCreateShader(GL_FRAGMENT_SHADER);
+    m_ProgramID = glCreateProgram();
+
+    m_VS.source = _pShaderHeader;
+    m_FS.source = _pShaderHeader;
+
+    m_VS.source += readFile(m_VS.fileName);
+    m_FS.source += readFile(m_FS.fileName);
+    
+    const GLchar* vsProgramTextPtr = static_cast<const GLchar*>(m_VS.source.c_str());
+    const GLchar* fsProgramTextPtr = static_cast<const GLchar*>(m_FS.source.c_str());
+ 
+    glShaderSource(m_VS.id, 1, &vsProgramTextPtr, NULL);
+    glShaderSource(m_FS.id, 1, &fsProgramTextPtr, NULL);
+
+    if(!compileShader(m_VS) || !compileShader(m_FS))
+    {
+        std::cerr << "Could not compile the shaders. There is something wrong!!!";
+        b_Initialized = false;
+        return;
+    }
+
+    glAttachShader(m_ProgramID, m_VS.id);
+    glAttachShader(m_ProgramID, m_FS.id);
+
+    glLinkProgram(m_ProgramID);
+    b_Initialized = true;
+}
+
 void glcShaderProgram::link()
 {
 	glLinkProgram(m_ProgramID);
