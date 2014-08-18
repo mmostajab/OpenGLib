@@ -34,7 +34,7 @@ void Sphere3D::init()
 	m_ShaderPrg->link();
 
 	if(b_CubeMapping)
-		m_CubeTexturePtr->init();
+		m_CubeTexturePtr->init(10, 10, 10);
 	else
 		m_TexturePtr->init();
 
@@ -112,6 +112,15 @@ void Sphere3D::render()
 	m_ShaderPrg->sendUniformMatrix4fv("modelview_matrix", modelViewMat);
 	m_ShaderPrg->sendUniformMatrix4fv("projection_matrix", projectionMat);
 	m_ShaderPrg->sendUniform("texture0", 0);
+
+	if(b_CubeMapping)
+	{
+		m_ShaderPrg->sendUniform3fv("camera_position", 0.0f, 0.0f, 0.0f);
+		//m_CubeTexturePtr->generate();
+		//m_CubeTexturePtr->use();
+	}
+	else
+		m_TexturePtr->use();
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);

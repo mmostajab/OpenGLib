@@ -38,6 +38,7 @@ public:
 
 	void sendUniform(const std::string& _pUniformName, const int& _pId);
 	void sendUniformMatrix4fv(const std::string& _pUniformName, const float* _pMatrixPtr, bool _pTranspose = false);
+	void sendUniform3fv(const std::string& _pUniformName, const float& _pV1, const float& _pV2, const float& _pV3);
 	void bindAttribute(const unsigned int& _pIndex, const std::string& _pAttributeName);
 
 	void deinit();

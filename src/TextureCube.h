@@ -16,6 +16,7 @@ public:
 
 	void init(const float& _pX = 0.0f, const float& _pY = 0.0f, const float& _pZ = 0.0f);
 	void generate(const float& _pX = 0.0f, const float& _pY = 0.0f, const float& _pZ = 0.0f);
+	//void ndGenerate(const float& _pX = 0.0f, const float& _pY = 0.0f, const float& _pZ = 0.0f);
 
 	void use();
 

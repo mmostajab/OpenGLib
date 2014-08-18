@@ -148,7 +148,7 @@ bool glcShaderProgram::compileShader(const glcShaderInfo& _pShaderInfo)
 
     if (!result)
     {
-        std::cout << "Could not compile shader: " << _pShaderInfo.id << std::endl;
+        std::cout << "Could not compile shader: " << _pShaderInfo.id << " : " << _pShaderInfo.fileName << std::endl;
         outputShaderLog(_pShaderInfo);
         
         return false;
@@ -167,6 +167,12 @@ void glcShaderProgram::sendUniformMatrix4fv(const std::string& _pUniformName, co
 {
 	GLuint location = getUniformLocation(_pUniformName);
 	glUniformMatrix4fv(location, 1, _pTranspose, _pMatrixPtr);
+}
+
+void glcShaderProgram::sendUniform3fv(const std::string& _pUniformName, const float& _pV1, const float& _pV2, const float& _pV3)
+{
+    GLuint location = getUniformLocation(_pUniformName);
+    glUniform3f(location, _pV1, _pV2, _pV3);   
 }
 
 void glcShaderProgram::bindAttribute(const unsigned int& _pIndex, const std::string& _pAttributeName)
