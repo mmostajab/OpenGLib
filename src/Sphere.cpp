@@ -3,29 +3,30 @@
 #include <vector>
 
 Sphere3D::Sphere3D(const float& _pRadius, const int& _pSlices, const int& _pStacks, const char* _pTextureFilename):
-	m_Radius(_pRadius), m_Slices(_pSlices), m_Stacks(_pStacks), m_TextureFilename(_pTextureFilename)
+	m_Radius(_pRadius), m_Slices(_pSlices), m_Stacks(_pStacks), m_TextureFilename(_pTextureFilename), m_X(0.0f), m_Y(0.0f), m_Z(0.0f), m_RotDeg(0.0f)
 {
-	m_ShaderHeader = "#version 130\n#define SIMPLE_TEXTURING\n";
-	m_ShaderPrg = new glcShaderProgram("../src/sphere.vert", "../src/sphere.frag");
-	m_TexturePtr = new glcTexture2D(m_TextureFilename.c_str());
+  //m_ShaderHeader = "#version 130\n#define SIMPLE_TEXTURING\n";
+  m_ShaderHeader = "#version 130\n#define SPHERICAL_MAPPING\n";
+  m_ShaderPrg = new glcShaderProgram("../src/sphere.vert", "../src/sphere.frag");
+  m_TexturePtr = new glcTexture2D(m_TextureFilename.c_str());
 
-	b_Initialized = false;
-	b_CubeMapping = false;
+  b_Initialized = false;
+  b_CubeMapping = false;
 }
 
 Sphere3D::Sphere3D(const float& _pRadius, const int& _pSlices, const int& _pStacks):
-	m_Radius(_pRadius), m_Slices(_pSlices), m_Stacks(_pStacks)
+	m_Radius(_pRadius), m_Slices(_pSlices), m_Stacks(_pStacks), m_RotDeg(0.0f)
 {
-	m_ShaderHeader = "#version 130\n#define CUBE_MAPPING\n";
-	m_ShaderPrg = new glcShaderProgram("../src/sphere.vert", "../src/sphere.frag");
+  m_ShaderHeader = "#version 130\n#define CUBE_MAPPING\n";
+  m_ShaderPrg = new glcShaderProgram("../src/sphere.vert", "../src/sphere.frag");
 
-	m_CubeTexturePtr = new glcTextureCube();
+  m_CubeTexturePtr = new glcTextureCube();
 
-	b_Initialized = false;
-	b_CubeMapping = true;
+  b_Initialized = false;
+  b_CubeMapping = true;
 }
 
-void Sphere3D::init()
+void Sphere3D::init(const float& _pX, const float& _pY, const float& _pZ)
 {
 	m_ShaderPrg->init(m_ShaderHeader);
 	m_ShaderPrg->bindAttribute(0, "a_Vertex");
@@ -34,7 +35,7 @@ void Sphere3D::init()
 	m_ShaderPrg->link();
 
 	if(b_CubeMapping)
-		m_CubeTexturePtr->init(10, 10, 10);
+		m_CubeTexturePtr->init(_pX, _pY, _pZ);
 	else
 		m_TexturePtr->init();
 
@@ -59,7 +60,7 @@ void Sphere3D::init()
 			y = sin(thetha) * sinPhi * m_Radius;
 			z = cosPhi * m_Radius;
 
-			s  = 1.0f - (float)j / (float)m_Slices;
+			s  = (float)j / (float)m_Slices;
 			t  = (float)i / (float)m_Stacks;
 			//s = thetha / (2 * PI);
 			//t = phi / PI;
@@ -76,7 +77,7 @@ void Sphere3D::init()
 			y = sin(thetha) * sinPhi2 * m_Radius;
 			z = cosPhi2 * m_Radius;
 
-			s = 1.0f - (float)j / (float)m_Slices;
+			s = (float)j / (float)m_Slices;
 			t = (float)(i + 1) / (float)m_Stacks;
 			//s = thetha / (2 * PI);
 			//t = phi2 / PI;
@@ -94,6 +95,10 @@ void Sphere3D::init()
 	glBindBuffer(GL_ARRAY_BUFFER, m_BufferId);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(SphereVert), &vertices[0], GL_STATIC_DRAW);
 
+	m_X = _pX;
+	m_Y = _pY;
+	m_Z = _pZ;
+	
 	b_Initialized = true;
 }
 
@@ -101,6 +106,16 @@ void Sphere3D::render()
 {
 	glPushMatrix();
 	//glEnable(GL_CULL_FACE);
+	
+	//glMatrixMode(GL_MODELVIEW_MATRIX);
+	//glLoadIdentity();
+	glTranslatef(m_X, m_Y, m_Z);
+	
+	if(!b_CubeMapping)
+	{
+	  m_RotDeg += 0.3;
+	  glRotatef(m_RotDeg, 1, 1, 1);
+	}
 
 	static float modelViewMat[16];
 	static float projectionMat[16];
@@ -115,9 +130,10 @@ void Sphere3D::render()
 
 	if(b_CubeMapping)
 	{
+	  
 		m_ShaderPrg->sendUniform3fv("camera_position", 0.0f, 0.0f, 0.0f);
 		//m_CubeTexturePtr->generate();
-		//m_CubeTexturePtr->use();
+		m_CubeTexturePtr->use();
 	}
 	else
 		m_TexturePtr->use();
@@ -150,6 +166,20 @@ void Sphere3D::render()
 void Sphere3D::deinit()
 {
 	
+}
+
+void Sphere3D::setPosition(const float& _pX, const float& _pY, const float& _pZ)
+{
+  m_X = _pX;
+  m_Y = _pY;
+  m_Z = _pZ;
+  
+  m_CubeTexturePtr->setPosition(m_X, m_Y, m_Z);
+}
+
+glcTextureCube* Sphere3D::getTextureCubePtr()
+{
+  return m_CubeTexturePtr;
 }
 
 Sphere3D::~Sphere3D()

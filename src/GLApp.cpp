@@ -32,6 +32,7 @@ void GLApp::onResize(const int& _pWidth, const int& _pHeight)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(52.0f, static_cast<float>(m_Width) / static_cast<float>(m_Height), 0.01f, 100.0f);
+	//gluPerspective(90.0f, 1, 0.01f, 100.0f);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

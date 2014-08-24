@@ -71,6 +71,36 @@ void glcTexture2D::deinit()
 	glDeleteTextures(1, &m_ID);
 }
 
+void glcTexture2D::beginFishEyeRendering(const int& _pResW, const int& _pResH)
+{
+  GLint viewport[4];
+  glGetIntegerv(GL_VIEWPORT, viewport);
+  
+  m_PreResW = viewport[2];
+  m_PreResH = viewport[3];
+  
+  m_RenderTexH = m_RenderTexW = _pResW;
+  if(_pResH != 1)
+    m_RenderTexH = _pResH;
+  
+  glViewport(0, 0, m_RenderTexW, m_RenderTexH);
+  glMatrixMode(GL_PROJECTION);
+  glPushMatrix();
+  glLoadIdentity();
+  gluPerspective(90, static_cast<float>(m_RenderTexW) / static_cast<float>(m_RenderTexH), 0.1f, 100.0f);
+  
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+}
+
+void glcTexture2D::finishFishEyeRendering()
+{
+  if(b_Initialized)
+  {
+    
+  }
+}
+
 glcTexture2D::~glcTexture2D()
 {
 }

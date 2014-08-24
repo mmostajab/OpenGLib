@@ -24,6 +24,7 @@ add_executable (OpenGLib
   targa.cpp
   Terrain.cpp
   Sphere.cpp
+  Box.cpp
   )
 
 target_link_libraries (OpenGLib ${OPENGL_LIBRARY} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES} ${ANT_TWEAK_BAR_LIBRARY})

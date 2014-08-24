@@ -1,5 +1,5 @@
-#ifndef __SPHERE_3D_H__
-#define __SPHERE_3D_H__
+#ifndef __BOX_3D_H__
+#define __BOX_3D_H__
 
 #include <GL/glew.h>
 
@@ -10,15 +10,16 @@
 #include <string>
 #include <math.h>
 
-struct SphereVert
+struct BoxVert
 {
 	float x, y, z;
 	float s, t;
 	float nx, ny, nz;
 
-	SphereVert(const float& _pX, const float& _pY, const float& _pZ, const float& _pS, const float& _pT):
-		x(_pX), y(_pY), z(_pZ), s(_pS), t(_pT), nx(_pX), ny(_pY), nz(_pZ)
+	BoxVert(const float& _pX, const float& _pY, const float& _pZ, const float& _pS, const float& _pT, const float& _pNx, const float& _pNy, const float& _pNz):
+	    x(_pX), y(_pY), z(_pZ), s(_pS), t(_pT), nx(_pNx), ny(_pNy), nz(_pNz)
 	{
+	      
 	}
 
 	void normalizeNormal()
@@ -33,28 +34,14 @@ struct SphereVert
 			nz /= l;
 		}
 	}
-
-	void computeNormal()
-	{
-		float l2 = x * x + y * y + z * z;
-		float l = sqrt(l2);
-
-		if(l > 0.0001f)
-		{
-			nx = x / l;
-			ny = y / l;
-			nz = z / l;
-		}	
-	}
 };
 
-class Sphere3D
+class Box3D
 {
 private:
 	GLuint m_BufferId;
 
-	float m_Radius;
-	int m_Slices, m_Stacks;
+	float m_Width;
 
 	std::string m_ShaderHeader;
 	glcShaderProgram* m_ShaderPrg;
@@ -65,15 +52,15 @@ private:
 	
 	float m_X, m_Y, m_Z;
 	float m_RotDeg;
-
+ 
 	union {
 		glcTexture2D* m_TexturePtr;
 		glcTextureCube* m_CubeTexturePtr;
 	};
 
 public:
-	Sphere3D(const float& _pRadius, const int& _pSlices, const int& _pStacks, const char* _pTextureFilename);
-	Sphere3D(const float& _pRadius, const int& _pSlices, const int& _pStacks);
+	Box3D(const float& _pWidth, const char* _pTextureFilename);
+	Box3D(const float& _pWidth);
 
 	void init(const float& _pX = 0.0f, const float& _pY = 0.0f, const float& _pZ = 0.0f);
 
@@ -85,7 +72,7 @@ public:
 	
 	void setPosition(const float& _pX, const float& _pY, const float& _pZ);
 
-	~Sphere3D();
+	~Box3D();
 };
 
 #endif

@@ -11,6 +11,9 @@ private:
 	std::string m_TextureFilename;
 
 	bool b_Initialized;
+	
+	int m_PreResW, m_PreResH;
+	int m_RenderTexW, m_RenderTexH;
 
 public:
 	glcTexture2D();
@@ -22,6 +25,9 @@ public:
 	void use();
 
 	void deinit();
+	
+	void beginFishEyeRendering(const int& _pResW = 512, const int& _pResH = -1);
+	void finishFishEyeRendering();
 
 	~glcTexture2D();
 };
